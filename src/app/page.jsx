@@ -1,4 +1,11 @@
+import CategoriesSection from "./components/CategoriesSection";
+import Header from "./components/header";
+import HeroSection from "./components/HeroSection";
 import styles from "./memes.module.css";
+import InteractionBar from './components/InteractionBar';
+import Footer from "./components/footer/footer";
+import Sidebar from "./components/SideBar";
+
 
 export default function Home() {
   // Array de dados dos memes para serem passados como props
@@ -167,78 +174,19 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {/* COMPONENTE: Header */}
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <h1>MemeVerse</h1>
-          <span>🌟</span>
-        </div>
-        <nav className={styles.nav}>
-          <a href="#" className={styles.active}>
-            Home
-          </a>
-          <a href="#">Trending</a>
-          <a href="#">Create</a>
-          <a href="#">Categories</a>
-          <a href="#">Profile</a>
-        </nav>
-
-        <div className={styles.userActions}>
-          <button className={styles.notificationBtn}>🔔</button>
-          <button className={styles.userAvatar}>
-            <img src="https://i.pravatar.cc/150?img=3" alt="Your profile" />
-          </button>
-        </div>
-      </header>
+      <Header headerNav={"MemeVerse"} navTitle1="Home" navTitle2="Trending" navTitle3="Create" navTitle4="Categories" logoNav={"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Lionel_Messi_20180626.jpg/500px-Lionel_Messi_20180626.jpg"}/>
       {/* FIM COMPONENTE: Header */}
 
       <div className={styles.mainContent}>
         <div className={styles.contentArea}>
           {/* COMPONENTE: HeroSection */}
-          <section className={styles.heroSection}>
-            <div className={styles.heroContent}>
-              <span className={styles.heroTag}>Meme do Dia</span>
-              <h2 className={styles.heroTitle}>{memeOfTheDay.title}</h2>
-              <p className={styles.heroDescription}>
-                {memeOfTheDay.description}
-              </p>
-              <div className={styles.heroAuthor}>
-                <img
-                  src={memeOfTheDay.authorAvatar}
-                  alt={memeOfTheDay.author}
-                />
-                <span>Por {memeOfTheDay.author}</span>
-              </div>
-              <div className={styles.heroStats}>
-                <span>❤️ {memeOfTheDay.likes}</span>
-                <span>💬 {memeOfTheDay.comments}</span>
-              </div>
-              <button className={styles.heroButton}>Ver meme completo</button>
-            </div>
-            <div className={styles.heroImageContainer}>
-              <img
-                src={memeOfTheDay.image}
-                alt={memeOfTheDay.title}
-                className={styles.heroImage}
-              />
-            </div>
-          </section>
+      {/* COMPONENTE: HeroSection */}
+<HeroSection meme={memeOfTheDay} />
+{/* FIM COMPONENTE: HeroSection */}
           {/* FIM COMPONENTE: HeroSection */}
 
           {/* COMPONENTE: CategoriesSection */}
-          <section className={styles.categoriesSection}>
-            <h2 className={styles.sectionTitle}>Explore por Categorias</h2>
-            <div className={styles.categoriesGrid}>
-              {categories.map((category) => (
-                <div key={category.id} className={styles.categoryCard}>
-                  <span className={styles.categoryIcon}>{category.icon}</span>
-                  <h3 className={styles.categoryName}>{category.name}</h3>
-                  <span className={styles.categoryCount}>
-                    {category.count} memes
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
+        <CategoriesSection categories={categories} />
           {/* FIM COMPONENTE: CategoriesSection */}
 
           {/* COMPONENTE: Feed */}
@@ -266,7 +214,7 @@ export default function Home() {
                     </div>
                     <span className={styles.memeCategory}>{meme.category}</span>
                   </div>
-                  <img
+                  <img  
                     src={meme.image}
                     alt={meme.title}
                     className={styles.memeImage}
@@ -274,29 +222,15 @@ export default function Home() {
                   <div className={styles.memeContent}>
                     <h3 className={styles.memeTitle}>{meme.title}</h3>
                     <p className={styles.memeDescription}>{meme.description}</p>
+                    
 
                     {/* COMPONENTE: InteractionBar */}
-                    <div className={styles.interactionBar}>
-                      <div className={styles.interactionButton}>
-                        <span>👍</span>
-                        <span>{meme.likes}</span>
-                      </div>
-                      <div className={styles.interactionButton}>
-                        <span>💬</span>
-                        <span>{meme.comments}</span>
-                      </div>
-                      <div className={styles.interactionButton}>
-                        <span>🔄</span>
-                        <span>Share</span>
-                      </div>
-                      <div className={styles.interactionButton}>
-                        <span>🔖</span>
-                        <span>Save</span>
-                      </div>
-                    </div>
+                    <InteractionBar  meme={meme}/>
+                    <memeCard meme={meme}/>
                     {/* FIM COMPONENTE: InteractionBar */}
                   </div>
                 </div>
+                
                 // FIM COMPONENTE: MemeCard
               ))}
             </div>
@@ -400,136 +334,12 @@ export default function Home() {
         </div>
 
         {/* COMPONENTE: Sidebar */}
-        <aside className={styles.sidebar}>
-          <div className={styles.sidebarSection}>
-            <h3 className={styles.sidebarTitle}>Eventos Próximos</h3>
-            {upcomingEvents.map((event) => (
-              // COMPONENTE: EventCard
-              <div key={event.id} className={styles.eventCard}>
-                <h4 className={styles.eventTitle}>{event.title}</h4>
-                <p className={styles.eventDate}>{event.date}</p>
-                <p className={styles.eventParticipants}>
-                  {event.participants} participantes
-                </p>
-                <button className={styles.eventButton}>Participar</button>
-              </div>
-              // FIM COMPONENTE: EventCard
-            ))}
-          </div>
-
-          <div className={styles.sidebarSection}>
-            <h3 className={styles.sidebarTitle}>MemeVerse Premium</h3>
-            <div className={styles.premiumCard}>
-              <h4 className={styles.premiumTitle}>
-                Desbloqueie recursos exclusivos!
-              </h4>
-              <ul className={styles.premiumFeatures}>
-                <li>Sem anúncios</li>
-                <li>Uploads ilimitados</li>
-                <li>Ferramentas de edição avançadas</li>
-                <li>Estatísticas detalhadas</li>
-              </ul>
-              <button className={styles.premiumButton}>
-                Experimentar Grátis
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.sidebarSection}>
-            <h3 className={styles.sidebarTitle}>Tags Populares</h3>
-            <div className={styles.tagCloud}>
-              <span className={`${styles.tag} ${styles.tagLarge}`}>
-                #memeday
-              </span>
-              <span className={styles.tag}>#programação</span>
-              <span className={`${styles.tag} ${styles.tagMedium}`}>
-                #humor
-              </span>
-              <span className={styles.tag}>#escola</span>
-              <span className={`${styles.tag} ${styles.tagLarge}`}>
-                #trabalhoremoto
-              </span>
-              <span className={styles.tag}>#segundafeira</span>
-              <span className={`${styles.tag} ${styles.tagMedium}`}>
-                #games
-              </span>
-              <span className={styles.tag}>#nofilter</span>
-            </div>
-          </div>
-        </aside>
+       <Sidebar/>
         {/* FIM COMPONENTE: Sidebar */}
       </div>
 
       {/* COMPONENTE: Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerTop}>
-          <div className={styles.footerLogo}>
-            <h2>MemeVerse</h2>
-            <p>O universo dos melhores memes da internet.</p>
-          </div>
-
-          <div className={styles.footerNavContainer}>
-            <div className={styles.footerNavSection}>
-              <h3>Navegação</h3>
-              <nav className={styles.footerNav}>
-                <a href="#">Home</a>
-                <a href="#">Trending</a>
-                <a href="#">Create</a>
-                <a href="#">Categories</a>
-                <a href="#">Profile</a>
-              </nav>
-            </div>
-
-            <div className={styles.footerNavSection}>
-              <h3>Recursos</h3>
-              <nav className={styles.footerNav}>
-                <a href="#">Editor de Memes</a>
-                <a href="#">Templates</a>
-                <a href="#">API</a>
-                <a href="#">Para Desenvolvedores</a>
-              </nav>
-            </div>
-
-            <div className={styles.footerNavSection}>
-              <h3>Empresa</h3>
-              <nav className={styles.footerNav}>
-                <a href="#">Sobre nós</a>
-                <a href="#">Carreiras</a>
-                <a href="#">Blog</a>
-                <a href="#">Contato</a>
-              </nav>
-            </div>
-
-            <div className={styles.footerNavSection}>
-              <h3>Legal</h3>
-              <nav className={styles.footerNav}>
-                <a href="#">Termos de Uso</a>
-                <a href="#">Privacidade</a>
-                <a href="#">Cookies</a>
-                <a href="#">LGPD</a>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.footerBottom}>
-          <p>© 2025 MemeVerse - Todos os direitos reservados</p>
-          <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialLink}>
-              <span>📱</span>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <span>📘</span>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <span>📸</span>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <span>🐦</span>
-            </a>
-          </div>
-        </div>
-      </footer>
+     <Footer />
       {/* FIM COMPONENTE: Footer */}
     </div>
   );
